@@ -68,6 +68,7 @@ def get_openai_agent_executor(
             )
         # We call the tool_executor and get back a response
         responses = await tool_executor.abatch(actions)
+
         # We use the response to create a ToolMessage
         tool_messages = [
             LiberalToolMessage(
@@ -79,6 +80,11 @@ def get_openai_agent_executor(
                 last_message.additional_kwargs["tool_calls"], responses
             )
         ]
+        
+        # print out each of the tool messages
+        for i, tool_message in enumerate(tool_messages):
+            print(f"Tool Message {i}: {tool_message}")
+            
         return tool_messages
 
     workflow = MessageGraph()
